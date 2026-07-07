@@ -149,8 +149,14 @@ func authLogin(email string, password string) {
 
 func dashboard() {
 	clear()
+	var name string
+	for i := range actived {
+		if actived[i].status == true {
+			name = actived[i].name
+		}
+	}
 	var input int
-	fmt.Printf("\n--- Welcome to system ---\n\n hello 1 (development)\n\n1. List All Users\n2. Logout\n\n0. Exit\n\nChoose a menu :   ")
+	fmt.Printf("\n--- Welcome to system ---\n\nHello %s\n\n1. List All Users\n2. Logout\n\n0. Exit\n\nChoose a menu :   ", name)
 	fmt.Scanf("%d", &input)
 	if input == 1 {
 		// dashboard()
