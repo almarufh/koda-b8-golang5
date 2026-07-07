@@ -121,6 +121,20 @@ func exit() {
 }
 
 func authLogin(email string, password string) {
+	var activedSaved bool = false
+	var indexActived int
+	for i := range actived {
+		if actived[i].email == email {
+			activedSaved = true
+			indexActived = i
+		}
+	}
+
+	if activedSaved == true {
+		actived[indexActived].status = true
+		dashboard()
+	}
+
 	for x := range user {
 		loginEmail := user[x].getEmail
 		loginPassword := user[x].getPassword()
@@ -150,9 +164,11 @@ func authLogin(email string, password string) {
 func dashboard() {
 	clear()
 	var name string
+	var indexActived int
 	for i := range actived {
 		if actived[i].status == true {
 			name = actived[i].name
+			indexActived = i
 		}
 	}
 	var input int
@@ -162,7 +178,7 @@ func dashboard() {
 		listUsers()
 	}
 	if input == 2 {
-		status = false
+		actived[indexActived].status = false
 		main()
 	}
 
