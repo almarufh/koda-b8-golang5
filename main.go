@@ -31,10 +31,10 @@ var user = []Users{
 		password: "1234",
 	},
 	{
-		first:    "1",
-		last:     "1",
-		email:    "1",
-		password: "1",
+		first:    "CuanBot",
+		last:     "",
+		email:    "a",
+		password: "a",
 	},
 }
 
@@ -138,7 +138,8 @@ func dashboard() {
 	fmt.Printf("\n--- Welcome to system ---\n\n hello 1 (development)\n\n1. List All Users\n2. Logout\n\n0. Exit\n\nChoose a menu :   ")
 	fmt.Scanf("%d", &input)
 	if input == 1 {
-		dashboard()
+		// dashboard()
+		listUsers()
 	}
 	if input == 2 {
 		status = false
@@ -148,6 +149,19 @@ func dashboard() {
 	if input == 0 {
 		exit()
 	}
+}
+
+func listUsers() {
+	clear()
+	for x := range user {
+		urut := x + 1
+		name := user[x].fullName()
+		email := user[x].getEmail()
+		fmt.Printf("\n%d. %s %s", urut, name, email)
+	}
+	fmt.Printf("\n\npress enter to back Dashboard...  ")
+	fmt.Scanf("\n")
+	dashboard()
 }
 
 func login() {
