@@ -5,6 +5,11 @@ import (
 	"os"
 )
 
+type Login struct {
+	email    string
+	password string
+}
+
 type Users struct {
 	first    string
 	last     string
@@ -20,6 +25,14 @@ func clear() {
 
 func (u Users) fullName() string {
 	return u.first + " " + u.last
+}
+
+func (u Users) getEmail() string {
+	return u.email
+}
+
+func (u Users) getPassword() string {
+	return u.password
 }
 
 func register() {
@@ -77,6 +90,21 @@ func exit() {
 	os.Exit(0)
 }
 
+func login() {
+	clear()
+	var inputEmail string
+	var inputPassword string
+	fmt.Printf("\n\n---Login---\n\nEnter your email: ")
+	fmt.Scanf("%s", &inputEmail)
+	fmt.Printf("Enter your password: ")
+	fmt.Scanf("%s", &inputPassword)
+	dataLogin := Login{
+		email:    inputEmail,
+		password: inputPassword,
+	}
+	fmt.Println(dataLogin)
+}
+
 func main() {
 	var input int
 	clear()
@@ -86,6 +114,10 @@ func main() {
 	fmt.Scanf("%d", &input)
 	if input == 1 {
 		register()
+	}
+
+	if input == 2 {
+		login()
 	}
 
 	if input == 0 {
