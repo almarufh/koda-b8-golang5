@@ -121,13 +121,32 @@ func authLogin(email string, password string) {
 		}
 	}
 	if status == true {
-		fmt.Printf("Login success, press enter to back..")
+		clear()
+		fmt.Printf("Login success, press enter to Dashboard..")
 		fmt.Scanf("\n")
-		main()
+		dashboard()
 	} else {
 		fmt.Printf("\n\nWrong email or password, press enter to restart...")
 		fmt.Scanf("\n")
 		login()
+	}
+}
+
+func dashboard() {
+	clear()
+	var input int
+	fmt.Printf("\n--- Welcome to system ---\n\n hello 1 (development)\n\n1. List All Users\n2. Logout\n\n0. Exit\n\nChoose a menu :   ")
+	fmt.Scanf("%d", &input)
+	if input == 1 {
+		dashboard()
+	}
+	if input == 2 {
+		status = false
+		main()
+	}
+
+	if input == 0 {
+		exit()
 	}
 }
 
