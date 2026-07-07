@@ -159,7 +159,6 @@ func dashboard() {
 	fmt.Printf("\n--- Welcome to system ---\n\nHello %s\n\n1. List All Users\n2. Logout\n\n0. Exit\n\nChoose a menu :   ", name)
 	fmt.Scanf("%d", &input)
 	if input == 1 {
-		// dashboard()
 		listUsers()
 	}
 	if input == 2 {
