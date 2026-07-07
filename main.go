@@ -26,26 +26,28 @@ type Users struct {
 	password string
 }
 
-var user []Users = []Users{
-	{
-		first:    "Alma'ruf",
-		last:     "Hidayat",
-		email:    "owner",
-		password: "81dc9bdb52d04dc20036dbd8313ed055",
-	},
-	{
-		first:    "Ali",
-		last:     "Ghufro",
-		email:    "admin",
-		password: "81dc9bdb52d04dc20036dbd8313ed055",
-	},
-	{
-		first:    "CuanBot",
-		last:     "",
-		email:    "a",
-		password: "0cc175b9c0f1b6a831c399e269772661",
-	},
-}
+// var user []Users = []Users{
+// 	{
+// 		first:    "Alma'ruf",
+// 		last:     "Hidayat",
+// 		email:    "owner",
+// 		password: "81dc9bdb52d04dc20036dbd8313ed055",
+// 	},
+// 	{
+// 		first:    "Ali",
+// 		last:     "Ghufro",
+// 		email:    "admin",
+// 		password: "81dc9bdb52d04dc20036dbd8313ed055",
+// 	},
+// 	{
+// 		first:    "CuanBot",
+// 		last:     "",
+// 		email:    "a",
+// 		password: "0cc175b9c0f1b6a831c399e269772661",
+// 	},
+// }
+
+var user []Users = []Users{}
 
 var actived []userActive = []userActive{}
 
@@ -94,8 +96,6 @@ func register() {
 	var first string
 	var last string
 	var email string
-	// var password1 string
-	// var password2 string
 
 	clear()
 	fmt.Printf("\n\n--- Register ---\n\nWhat is your first name :  ")
@@ -108,12 +108,6 @@ func register() {
 	fmt.Scanf("%s", &email)
 
 	password := createPassword()
-
-	// fmt.Printf("Enter a strong password :  ")
-	// fmt.Scanf("%s", &password1)
-
-	// fmt.Printf("Confirm your password:  ")
-	// fmt.Scanf("%s", &password2)
 
 	new := Users{
 		first:    first,
