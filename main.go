@@ -1,6 +1,8 @@
 package main
 
 import (
+	"crypto/md5"
+	"encoding/hex"
 	"fmt"
 	"os"
 )
@@ -28,26 +30,29 @@ var user []Users = []Users{
 	{
 		first:    "Alma'ruf",
 		last:     "Hidayat",
-		email:    "almarufhidayat99@gmail.com",
-		password: "1234",
+		email:    "owner",
+		password: "81dc9bdb52d04dc20036dbd8313ed055",
 	},
 	{
 		first:    "Ali",
 		last:     "Ghufro",
-		email:    "alhyghuron@gmail.com",
-		password: "1234",
+		email:    "admin",
+		password: "81dc9bdb52d04dc20036dbd8313ed055",
 	},
 	{
 		first:    "CuanBot",
 		last:     "",
 		email:    "a",
-		password: "a",
+		password: "0cc175b9c0f1b6a831c399e269772661",
 	},
 }
 
 var actived []userActive = []userActive{}
 
-var status bool = false
+func md5Encrypted(password string) string {
+	encrypt := md5.Sum([]byte(password))
+	return hex.EncodeToString(encrypt[:])
+}
 
 func clear() {
 	fmt.Print("\033[H\033[2J")
@@ -91,7 +96,7 @@ func register() {
 		first:    first,
 		last:     last,
 		email:    email,
-		password: password,
+		password: md5Encrypted(password),
 	}
 
 	clear()
@@ -149,7 +154,7 @@ func authLogin(email string, password string) {
 			dashboard()
 		}
 	}
-	if status == true {
+	if actived[indexActived].status == true {
 		clear()
 		fmt.Printf("Login success, press enter to Dashboard..")
 		fmt.Scanf("\n")
@@ -193,7 +198,7 @@ func listUsers() {
 		urut := x + 1
 		name := user[x].fullName()
 		email := user[x].getEmail()
-		fmt.Printf("\n%d. %s %s", urut, name, email)
+		fmt.Printf("\n%d. %s [email : %s]", urut, name, email)
 	}
 	fmt.Printf("\n\npress enter to back Dashboard...  ")
 	fmt.Scanf("\n")
@@ -208,7 +213,7 @@ func login() {
 	fmt.Scanf("%s", &inputEmail)
 	fmt.Printf("Enter your password: ")
 	fmt.Scanf("%s", &inputPassword)
-	authLogin(inputEmail, inputPassword)
+	authLogin(inputEmail, md5Encrypted(inputPassword))
 }
 
 func main() {
