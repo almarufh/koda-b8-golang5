@@ -5,6 +5,13 @@ import (
 	"os"
 )
 
+type userActive struct {
+	name     string
+	email    string
+	password string
+	status   bool
+}
+
 type Login struct {
 	email    string
 	password string
@@ -17,7 +24,7 @@ type Users struct {
 	password string
 }
 
-var user = []Users{
+var user []Users = []Users{
 	{
 		first:    "Alma'ruf",
 		last:     "Hidayat",
@@ -37,6 +44,8 @@ var user = []Users{
 		password: "a",
 	},
 }
+
+var actived []userActive = []userActive{}
 
 var status bool = false
 
@@ -116,8 +125,14 @@ func authLogin(email string, password string) {
 		loginEmail := user[x].getEmail
 		loginPassword := user[x].getPassword()
 		if loginEmail() == email && loginPassword == password {
-			status = true
-			x = len(user)
+			status := userActive{
+				name:     user[x].fullName(),
+				email:    loginEmail(),
+				password: loginPassword,
+				status:   true,
+			}
+			actived = append(actived, status)
+			dashboard()
 		}
 	}
 	if status == true {
