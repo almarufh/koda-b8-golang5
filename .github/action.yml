@@ -1,0 +1,39 @@
+name: Publish App
+run-name: ${{github.event.head_commit.message}}
+on:
+  push:
+    tags:
+      - v*
+jobs:
+  get-source-code:
+    name: "Build image"
+    runs-on: ubuntu-latest
+    outputs:
+      output: ${{ steps.upload-source.outputs.artifact-id }}
+    steps:
+      - name: Get source code
+        uses: actions/checkout@v7
+      - name: Build image
+        uses: docker build -t ghcr.io/${{github.actor}}/auth-app:latest .
+      - name: Login to ghcr.io
+        uses: echo -n ${{secrets.GITHUB_TOKEN}} | docker login ghcr.io --username ${{github.actor}} --password-stdin
+      - name: Push image to ghcr.io
+        uses: docker push ghcr.io/${{github.actor}}/auth-app:latest
+
+  # release-app:
+  #   name: "Release new app version"
+  #   needs: build-app
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Download files in artifact
+  #       uses: actions/download-artifact@v8
+  #       with:
+  #         name: upload-dist
+  #         path: files
+  #     - name: Compress files dist from artifact
+  #       run: zip -r ./99mart-${{ github.ref_name }}.zip ./files/dist/*
+  #     - name: Release to Github
+  #       uses: softprops/action-gh-release@v3
+  #       with:
+  #         files: |
+  #           99mart-${{ github.ref_name }}.zip
