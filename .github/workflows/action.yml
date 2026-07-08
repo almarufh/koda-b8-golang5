@@ -24,7 +24,7 @@ jobs:
       - name: Build program
         run: go build -o program main.go
       - name: Compress files images
-        run: zip -r ./auth-app-${{ github.ref_name }}.zip ./program/*
+        run: zip -r ./auth-app-${{ github.ref_name }}.zip ./program
       - name: Release to Github
         uses: softprops/action-gh-release@v3
         with:
