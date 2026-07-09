@@ -5,19 +5,17 @@ on:
     tags:
       - v*
 jobs:
-  get-source-code:
-    name: "Get source code project"
+  build-publish:
+    name: "Build images and release program"
     runs-on: ubuntu-latest
-    outputs:
-      output: ${{ steps.upload-source.outputs.artifact-id }}
     steps:
       - name: Get source code
         uses: actions/checkout@v7
-      - name: Build image
+      - name: Build images
         run: docker build -t ghcr.io/${{github.actor}}/auth-app:latest .
       - name: Login to ghcr.io
         run: echo -n ${{secrets.GITHUB_TOKEN}} | docker login ghcr.io --username ${{github.actor}} --password-stdin
-      - name: Push image to ghcr
+      - name: Push images to ghcr
         run: docker push ghcr.io/${{github.actor}}/auth-app:latest
       - name: Install dependencies
         run: go mod tidy
