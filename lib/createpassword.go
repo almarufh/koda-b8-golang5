@@ -1,7 +1,7 @@
-package auth
+package lib
 
 import (
-	"authenticatiion-flow/lib/utils"
+	"authenticatiion-flow/utils"
 	"fmt"
 )
 

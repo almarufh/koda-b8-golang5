@@ -1,29 +1,24 @@
-package auth
+package lib
 
 import (
 	"authenticatiion-flow/database"
-	"authenticatiion-flow/lib/utils"
+	"authenticatiion-flow/utils"
 	"fmt"
 )
 
-func Register(users *[]database.Users) (database.Users, string) {
-	type results struct {
-		message string
-		code    string
-		data    database.Users
-	}
+func Register(users *[]database.Users) {
 	var first string
 	var last string
 	var email string
 
 	utils.Clear()
-	fmt.Printf("\n\n--- Register ---\n\nWhat is your first name :  ")
+	fmt.Printf("\n\n--- REGISTER ---\n\nFirst Name :  ")
 	fmt.Scanf("%s", &first)
 
-	fmt.Printf("What is your last name :  ")
+	fmt.Printf("Last Name :  ")
 	fmt.Scanf("%s", &last)
 
-	fmt.Printf("What is your email :  ")
+	fmt.Printf("Email :  ")
 	fmt.Scanf("%s", &email)
 
 	password := CreatePassword()
@@ -38,27 +33,26 @@ func Register(users *[]database.Users) (database.Users, string) {
 	defer func() {
 		if r := recover(); r != nil {
 			fmt.Printf("\nEmail belum terdaftar : %v\n", r)
-			fmt.Printf("\nPress enter to back ...  ")
-			fmt.Scanf("\n")
-			main()
 		}
 	}()
+
 	utils.Clear()
-	var isAccept string
+	var confirmAccept string
 	fmt.Printf("\n\nIs it true?\n\n")
 	fmt.Println("First Name : ", first)
 	fmt.Println("Last Name : ", last)
 	fmt.Println("Email : ", email)
 	fmt.Printf("\n\nContinue (y/n) :  ")
-	fmt.Scanf("%s", &isAccept)
-	if isAccept == "y" {
+	fmt.Scanf("%s", &confirmAccept)
+	switch confirmAccept {
+	case "y":
 		*users = append(*users, newUser)
 		fmt.Printf("\n\nRegister success, press enter to back..")
 		fmt.Scanf("\n")
-	} else if isAccept == "n" {
+		Menu()
+	case "n":
 		Register(users)
-	} else {
-		panic("Input wrong, press enter to back home..")
+	default:
+		Menu()
 	}
-	return newUser
 }
